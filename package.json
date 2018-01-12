@@ -1,0 +1,14 @@
+{
+  "name": "xiv-js-sdk",
+  "description": "Provides common toolkit for nodejs development",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "Mr. 14 <suke.shou@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mr-14/xiv-js-sdk.git"
+  },
+  "dependencies": {
+  }
+}
