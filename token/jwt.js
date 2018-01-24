@@ -32,3 +32,15 @@ exports.validateToken = tokenKey => token => {
     throw new HttpError(401, 'auth.token.invalid')
   }
 }
+
+exports.decodeToken = token => {
+  if (!token) {
+    throw new HttpError(500, 'auth.token.missing')
+  }
+
+  try {
+    return jwt.decode(token)
+  } catch (e) {
+    throw new HttpError(400, 'auth.token.invalid')
+  }
+}
