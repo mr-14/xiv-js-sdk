@@ -1,7 +1,7 @@
 {
   "name": "xiv-js-sdk",
   "description": "Provides common toolkit for nodejs development",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "index.js",
   "author": "Mr. 14 <suke.shou@gmail.com>",
   "license": "MIT",
