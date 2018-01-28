@@ -1,10 +1,9 @@
-
-export function getAction(url) {
+function getAction(url) {
   const idx = url.lastIndexOf('/')
   return url.substring(idx + 1)
 }
 
-export function getUrl(url, pathVars) {
+function getUrl(url, pathVars) {
   if (!pathVars) {
     return url
   }
@@ -17,7 +16,7 @@ export function getUrl(url, pathVars) {
   return url
 }
 
-export function getParamStr(params) {
+function getParamStr(params) {
   if (!params) {
     return ''
   }
@@ -31,4 +30,10 @@ export function getParamStr(params) {
   }
 
   return encodeURI(queries)
+}
+
+module.exports = {
+  getAction,
+  getUrl,
+  getParamStr,
 }

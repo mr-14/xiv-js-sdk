@@ -1,23 +1,23 @@
-import { getUrl, getParamStr } from './url'
+const urlutil = require('./url')
 
-export function get(url, { headers = {}, pathVars = {}, params = {} }) {
+function get(url, { headers = {}, pathVars = {}, params = {} }) {
   return request(url, 'GET', { headers, pathVars, params })
 }
 
-export function post(url, { headers = {}, pathVars = {}, body = {} }) {
+function post(url, { headers = {}, pathVars = {}, body = {} }) {
   return request(url, 'POST', { headers, pathVars, body })
 }
 
-export function put(url, { headers = {}, pathVars = {}, body = {} }) {
+function put(url, { headers = {}, pathVars = {}, body = {} }) {
   return request(url, 'UPDATE', { headers, pathVars, body })
 }
 
-export function remove(url, { headers = {}, pathVars = {} }) {
+function remove(url, { headers = {}, pathVars = {} }) {
   return request(url, 'DELETE', { headers, pathVars })
 }
 
 async function request(url, method, { headers = {}, pathVars = {}, params = {}, body = {} }) {
-  url = getUrl(url, pathVars) + getParamStr(params)
+  url = urlutil.getUrl(url, pathVars) + urlutil.getParamStr(params)
   const resp = await fetch(url, { method, headers, body })
   
   if (!resp.ok) {
@@ -31,4 +31,11 @@ async function request(url, method, { headers = {}, pathVars = {}, params = {}, 
 
   const data = await resp.json()
   return { body: data, ok: true }
+}
+
+module.exports = {
+  get,
+  post,
+  put,
+  remove,
 }
