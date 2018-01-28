@@ -2,7 +2,6 @@
   "name": "xiv-js-sdk",
   "description": "Provides common toolkit for nodejs development",
   "version": "0.1.3",
-  "main": "index.js",
   "author": "Mr. 14 <suke.shou@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -10,7 +9,19 @@
     "url": "git@github.com:mr-14/xiv-js-sdk.git"
   },
   "dependencies": {
-    "jsonwebtoken": "^8.1.0",
+    "jsonwebtoken": "^8.1.1",
     "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1"
+  },
+  "scripts": {
+    "build": "babel src -d lib",
+    "prepublishOnly": "npm run build"
   }
 }
