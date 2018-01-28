@@ -18,10 +18,11 @@ export function remove(url, { headers = {}, pathVars = {} }) {
 
 async function request(url, method, { headers = {}, pathVars = {}, params = {}, body = {} }) {
   url = getUrl(url, pathVars) + getParamStr(params)
-  var resp = await fetch(url, { method, headers, body })
+  headers = Object.assign(headers, { 'Content-Type': 'application/json' })
+  const resp = await fetch(url, { method, headers: new Headers(headers), body })
 
   if (!resp.ok) {
-    var error = await resp.json()
+    const error = await resp.json()
     return { body: error, ok: false }
   }
 
@@ -29,6 +30,6 @@ async function request(url, method, { headers = {}, pathVars = {}, params = {}, 
     return { body: null, ok: true }
   }
 
-  var data = await resp.json()
+  const data = await resp.json()
   return { body: data, ok: true }
 }
