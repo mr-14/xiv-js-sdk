@@ -18,7 +18,7 @@ export function remove(url, { headers = {}, pathVars = {} }) {
 
 async function request(url, method, { headers = {}, pathVars = {}, params = {}, body = {} }) {
   url = getUrl(url, pathVars) + getParamStr(params)
-  headers = Object.assign(headers, { 'Content-Type': 'application/json' })
+  headers = Object.assign(headers, { 'Content-Type': 'application/json;charset=UTF-8' })
   const resp = await fetch(url, { method, headers: new Headers(headers), body })
 
   if (!resp.ok) {
