@@ -1,28 +1,40 @@
 import fetch from 'node-fetch'
+import { URLSearchParams } from 'url'
 import { getUrl, getParamStr } from './url'
+
+const DATA_TYPE_JSON = 'JSON'
+const DATA_TYPE_FORM = 'FORM'
 
 export function get(url, { headers = {}, pathVars = {}, params = {} }) {
   return request(url, 'GET', { headers, pathVars, params })
 }
 
 export function post(url, { headers = {}, pathVars = {}, body = {} }) {
-  return request(url, 'POST', { headers, pathVars, body })
+  return request(url, 'POST', { headers, pathVars, body }, DATA_TYPE_JSON)
+}
+
+export function formPost(url, { headers = {}, pathVars = {}, body = {} }) {
+  return request(url, 'POST', { headers, pathVars, body }, DATA_TYPE_FORM)
 }
 
 export function put(url, { headers = {}, pathVars = {}, body = {} }) {
-  return request(url, 'UPDATE', { headers, pathVars, body })
+  return request(url, 'UPDATE', { headers, pathVars, body }, DATA_TYPE_JSON)
+}
+
+export function formPut(url, { headers = {}, pathVars = {}, body = {} }) {
+  return request(url, 'UPDATE', { headers, pathVars, body }, DATA_TYPE_FORM)
 }
 
 export function remove(url, { headers = {}, pathVars = {} }) {
   return request(url, 'DELETE', { headers, pathVars })
 }
 
-async function request(url, method, { headers = {}, pathVars = {}, params = {}, body = {} }) {
+async function request(url, method, { headers = {}, pathVars = {}, params = {}, body }, dataType) {
   url = getUrl(url, pathVars) + getParamStr(params)
-  headers = Object.assign(headers, { 'Content-Type': 'application/json;charset=UTF-8' })
+  headers = getHeaders(headers, dataType)
 
-  console.log('API Request =', { url, method, headers, body })
-  const resp = await getResponse(url, method, headers, body)
+  console.log('API Request =', { url, method, headers, body, dataType })
+  const resp = await getResponse(url, method, headers, body, dataType)
   console.log('API Response Status = ', resp.status)
 
   if (!resp.ok) {
@@ -38,13 +50,39 @@ async function request(url, method, { headers = {}, pathVars = {}, params = {}, 
   return { body: data, ok: true }
 }
 
-async function getResponse(url, method, headers, body) {
+function getHeaders(headers, dataType) {
+  let contentType = 'application/json;charset=UTF-8'
+
+  if (dataType === DATA_TYPE_FORM) {
+    contentType = 'application/x-www-form-urlencoded;charset=UTF-8' 
+  }
+
+  return Object.assign(headers, { 'Content-Type': contentType })
+}
+
+async function getResponse(url, method, headers, body, dataType) {
   try {
-    return await fetch(url, { method, headers, body: JSON.stringify(body) })
+    return await fetch(url, { method, headers, body: formatReqBody(body, dataType) })
   } catch (e) {
     console.error(e.message)
     return { body: { message: 'error.request.failed' }, ok: false }
   }
+}
+
+function formatReqBody(body, dataType) {
+  if (!body) { return null }
+
+  if (dataType === DATA_TYPE_JSON) {
+    return JSON.stringify(body)
+  }
+
+  if (dataType === DATA_TYPE_FORM) {
+    const params = new URLSearchParams()
+    Object.keys(body).forEach(key => { params.append(key, body[key]) })
+    return params
+  }
+
+  return body
 }
 
 async function getJSON(resp) {
