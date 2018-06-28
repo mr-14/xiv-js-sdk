@@ -1,31 +1,31 @@
-import fetch from 'node-fetch'
-import { URLSearchParams } from 'url'
-import { getUrl, getParamStr } from './url'
+const fetch = require('node-fetch')
+const URLSearchParams = require('url')
+const { getUrl, getParamStr } = require('./url')
 
 const DATA_TYPE_JSON = 'JSON'
 const DATA_TYPE_FORM = 'FORM'
 
-export function get(url, { headers = {}, pathVars = {}, params = {} }) {
+exports.get = (url, { headers = {}, pathVars = {}, params = {} }) => {
   return request(url, 'GET', { headers, pathVars, params })
 }
 
-export function post(url, { headers = {}, pathVars = {}, body = {} }) {
+exports.post = (url, { headers = {}, pathVars = {}, body = {} }) => {
   return request(url, 'POST', { headers, pathVars, body }, DATA_TYPE_JSON)
 }
 
-export function formPost(url, { headers = {}, pathVars = {}, body = {} }) {
+exports.formPost = (url, { headers = {}, pathVars = {}, body = {} }) => {
   return request(url, 'POST', { headers, pathVars, body }, DATA_TYPE_FORM)
 }
 
-export function put(url, { headers = {}, pathVars = {}, body = {} }) {
+exports.put = (url, { headers = {}, pathVars = {}, body = {} }) => {
   return request(url, 'UPDATE', { headers, pathVars, body }, DATA_TYPE_JSON)
 }
 
-export function formPut(url, { headers = {}, pathVars = {}, body = {} }) {
+exports.formPut = (url, { headers = {}, pathVars = {}, body = {} }) => {
   return request(url, 'UPDATE', { headers, pathVars, body }, DATA_TYPE_FORM)
 }
 
-export function remove(url, { headers = {}, pathVars = {} }) {
+exports.remove = (url, { headers = {}, pathVars = {} }) => {
   return request(url, 'DELETE', { headers, pathVars })
 }
 

@@ -1,9 +1,9 @@
-export function getAction(url) {
+exports.getAction = (url) => {
   var idx = url.lastIndexOf('/')
   return url.substring(idx + 1)
 }
 
-export function getUrl(url, pathVars) {
+exports.getUrl = (url, pathVars) => {
   if (!pathVars) {
     return url
   }
@@ -17,7 +17,7 @@ export function getUrl(url, pathVars) {
   return url
 }
 
-export function getParamStr(params) {
+exports.getParamStr = (params) => {
   if (!params) {
     return ''
   }
