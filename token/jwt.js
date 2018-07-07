@@ -1,46 +1,36 @@
-const HttpError = require('../error/HttpError')
 const jwt = require('jsonwebtoken')
 const uuidv4 = require('uuid/v4')
 
-exports.createAccessToken = (user, tokenKey) => jwt.sign({
-  merchantId: user.merchantId,
-  userId: user.id,
-  exp: Math.floor(Date.now() / 1000) + (60 * 60 * 2) // 2 hours
-}, tokenKey)
+exports.createAccessToken = (claim, tokenKey) => {
+  claim.exp = Math.floor(Date.now() / 1000) + (60 * 60 * 2) // 2 hours
+  return jwt.sign(claim, tokenKey)
+}
 
 exports.createRefreshToken = () => ({
   token: uuidv4(),
   exp: Math.floor(Date.now() / 1000) + (60 * 60 * 8) // 8 hours
 })
 
-exports.saveRefreshToken = (tokenDao, user, refreshToken) => (
-  tokenDao.insert({
-    id: refreshToken.token,
-    ttl: refreshToken.exp,
-    userId: user.id
-  })
-)
-
 exports.validateToken = tokenKey => token => {
   if (!tokenKey) {
-    throw new HttpError(500, 'auth.tokenKey.missing')
+    throw new Error('auth.tokenKey.missing')
   }
 
   try {
     return jwt.verify(token, tokenKey)
   } catch (e) {
-    throw new HttpError(401, 'auth.token.invalid')
+    throw new Error('auth.token.invalid')
   }
 }
 
 exports.decodeToken = token => {
   if (!token) {
-    throw new HttpError(500, 'auth.token.missing')
+    throw new Error('auth.token.missing')
   }
 
   try {
     return jwt.decode(token)
   } catch (e) {
-    throw new HttpError(400, 'auth.token.invalid')
+    throw new Error('auth.token.invalid')
   }
 }

@@ -1,8 +1,3 @@
-exports.getAction = (url) => {
-  var idx = url.lastIndexOf('/')
-  return url.substring(idx + 1)
-}
-
 exports.getUrl = (url, pathVars) => {
   if (!pathVars) {
     return url
