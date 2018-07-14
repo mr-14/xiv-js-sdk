@@ -1,4 +1,4 @@
-'use strict'
+const uuidv4 = require('uuid/v4')
 
 const alphaBytes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 const numericBytes = '0123456789'
@@ -36,10 +36,15 @@ function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+function uuid() {
+  return uuidv4()
+}
+
 module.exports = {
   randomAlphaNumeric,
   randomAlpha,
   randomNumeric,
   randomInt,
-  randomIntFromInterval
+  randomIntFromInterval,
+  uuid,
 }
