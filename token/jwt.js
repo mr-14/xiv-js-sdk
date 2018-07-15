@@ -11,7 +11,7 @@ exports.createRefreshToken = () => ({
   exp: Math.floor(Date.now() / 1000) + (60 * 60 * 8) // 8 hours
 })
 
-exports.validateToken = tokenKey => token => {
+exports.validateToken = (tokenKey, token) => {
   if (!tokenKey) {
     throw new Error('auth.tokenKey.missing')
   }
