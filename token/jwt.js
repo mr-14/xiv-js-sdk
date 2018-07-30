@@ -13,24 +13,24 @@ exports.createRefreshToken = () => ({
 
 exports.validateToken = (tokenKey, token) => {
   if (!tokenKey) {
-    throw new Error('auth.tokenKey.missing')
+    throw new Error('error.token.keyMissing')
   }
 
   try {
     return jwt.verify(token, tokenKey)
   } catch (e) {
-    throw new Error('auth.token.invalid')
+    throw new Error('error.token.invalid')
   }
 }
 
 exports.decodeToken = token => {
   if (!token) {
-    throw new Error('auth.token.missing')
+    throw new Error('error.token.missing')
   }
 
   try {
     return jwt.decode(token)
   } catch (e) {
-    throw new Error('auth.token.invalid')
+    throw new Error('error.token.invalid')
   }
 }
