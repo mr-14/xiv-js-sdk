@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const URLSearchParams = require('url')
+const { URLSearchParams } = require('url')
 const { getUrl, getParamStr } = require('./url')
 
 const DATA_TYPE_JSON = 'JSON'
@@ -54,7 +54,7 @@ function getHeaders(headers, dataType) {
   let contentType = 'application/json;charset=UTF-8'
 
   if (dataType === DATA_TYPE_FORM) {
-    contentType = 'application/x-www-form-urlencoded;charset=UTF-8' 
+    contentType = 'application/x-www-form-urlencoded;charset=UTF-8'
   }
 
   return Object.assign(headers, { 'Content-Type': contentType })
