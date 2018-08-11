@@ -2,10 +2,10 @@ exports.now = function () {
   return formatTimestamp(new Date())
 }
 
-exports.formatTimestamp= formatTimestamp
+exports.formatTimestamp = formatTimestamp
 function formatTimestamp(date, delimiter = '-') {
   const hour = ('0' + date.getHours()).slice(-2)
-  const minute =  ('0' + date.getMinutes()).slice(-2)
+  const minute = ('0' + date.getMinutes()).slice(-2)
   const second = ('0' + date.getSeconds()).slice(-2)
   return `${formatDate(date, delimiter)} ${hour}:${minute}:${second}`
 }
