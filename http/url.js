@@ -29,3 +29,12 @@ exports.getParamStr = (params) => {
 
   return encodeURI(queries)
 }
+
+exports.parseParamStr = (query) => {
+  const result = {}
+  query.split('&').forEach(part => {
+    const item = part.split('=')
+    result[item[0]] = decodeURIComponent(item[1])
+  })
+  return result
+}
